@@ -24,7 +24,7 @@ export default async function editor(state, listener) {
     clearConsole();
     state.editFile(state.getActiveFile(), { c: code });
     listener(ON_FILE_SAVE, code, codeMirrorEditor);
-    execute();
+    execute(); 
   };
   const container = el.withFallback('.js-code-editor');
 

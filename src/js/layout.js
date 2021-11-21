@@ -28,10 +28,10 @@ export const DEFAULT_LAYOUT = {
           elements: []
         }
       ],
-      direction: 'horizontal'
+      direction: 'vertical'
     }
   ],
-  direction: 'vertical'
+  direction: 'horizontal'
 };
 
 function validateLayout(item) {

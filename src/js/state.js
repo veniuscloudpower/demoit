@@ -74,11 +74,30 @@ export default async function createState(version) {
     if (stateFromURL) {
       try {
         state = await readFromJSONFile(stateFromURL);
+        localStorage.setItem("myState",JSON.stringify(state));
       } catch (error) {
         console.error(`Error reading ${ stateFromURL }`);
       }
     } else {
-      state = DEFAULT_STATE;
+      try {
+        var stateFromlocalStorage = localStorage.getItem("myState");
+        console.log(stateFromlocalStorage);
+        if (stateFromlocalStorage!=null)
+        {
+          
+          state = JSON.parse(stateFromlocalStorage);
+        }
+        else
+        {
+          console.log("Default State");
+          state = DEFAULT_STATE;
+        }
+      } catch (error) {
+        console.log(error);
+        state = DEFAULT_STATE;
+
+      }   
+      localStorage.setItem("myState",JSON.stringify(state));
     }
   }
 
@@ -101,33 +120,7 @@ export default async function createState(version) {
   let activeFile = resolveActiveFile();
 
   const persist = (reason, fork = false, done = () => {}) => {
-    DEBUG && console.log('state:persist reason=' + reason);
-    if (api.isForkable()) {
-      if (!fork && !api.isDemoOwner()) { return; }
-      let diff = DeepDiff.diff(initialState, state);
-      let stateData;
-
-      initialState = clone(state);
-      if (fork) {
-        diff = '';
-        delete state.owner;
-        stateData = state;
-      } else if (typeof diff === 'undefined' || !diff) {
-        // no diff and no forking so doesn't make sense to call the API
-        return;
-      } else {
-        diff = jsEncode(JSON.stringify(diff));
-        stateData = { demoId: state.demoId, owner: state.owner };
-      }
-      API.saveDemo(stateData, profile.token, diff).then(demoId => {
-        if (demoId && demoId !== state.demoId) {
-          state.demoId = demoId;
-          state.owner = profile.id;
-          ensureDemoIdInPageURL(demoId);
-        }
-        done();
-      });
-    }
+      localStorage.setItem("myState",JSON.stringify(state));     
   };
 
   const api = {

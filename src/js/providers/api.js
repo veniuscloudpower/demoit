@@ -13,34 +13,9 @@ const emptyQueue = function () {
 };
 
 const saveDemo = async function (state, token, diff) {
-  if (requestInFlight) {
-    queue.push({ state, token, diff });
-    return;
-  }
-
-  try {
-    requestInFlight = true;
-    const response = await fetch(SAVE_DEMO_URL, {
-      method: 'POST',
-      body: JSON.stringify({ state, a: diff }),
-      headers: { token }
-    });
-
-    const result = await response.json();
-
-    requestInFlight = false;
-    emptyQueue();
-
-    if (result.error) {
-      console.error(result.error);
-    } else if (result.demoId) {
-      return result.demoId;
-    }
-    console.log(result);
-  } catch (error) {
-    emptyQueue();
-    console.error(error);
-  }
+  
+  localStorage.setItem("myStageSaved",JSON.stringify({ state, a: diff }));
+  
 };
 
 const getDemos = async function (id, token) {
