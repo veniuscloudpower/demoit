@@ -15,30 +15,8 @@ import LS from './utils/localStorage';
 
 const git = gitfred();
 const LS_PROFILE_KEY = 'DEMOIT_PROFILE';
-const DEFAULT_STATE = {
-  'editor': {
-    'theme': 'light',
-    'statusBar': true,
-    'layout': DEFAULT_LAYOUT
-  },
-  'dependencies': [],
-  'files': {
-    'working': [
-      [
-        'code.js',
-        {
-          'c': `document.querySelector('#output').innerHTML = 'Hello world';
-
-console.log('Hello world');`
-        }
-      ]
-    ],
-    'head': null,
-    'i': 0,
-    'stage': [],
-    'commits': {}
-  }
-};
+const DEFAULT_STATE = {"editor":{"theme":"light","statusBar":true,"layout":{"elements":[{"name":"editor","elements":[]},{"elements":[{"name":"HTML","elements":[]},{"name":"console","elements":[]}],"direction":"vertical"}],"direction":"horizontal"}},
+"dependencies":["https://unpkg.com/react@16.14.0/umd/react.production.min.js","https://unpkg.com/react-dom@16.14.0/umd/react-dom.production.min.js","https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css"],"files":{"working":[["code.js",{"c":"import Title from 'Title.js';\nimport 'styles.css';\nconst useState = React.useState;\nconst App = function () {  \nconst [ count, change ] = useState(0); \nconsole.log(`count is: ${ count }`); \n return (\n   <section>\n    <Title count={ count } />    \n    <button onClick={ () => change(count + 1) }>Click me</button>    \n    </section>\n)\n                                                                                                                   }\n                                                                                 ReactDOM.render(<App />, document.querySelector('.output'));"}],["Title.js",{"c":"export default function Title({ count })\n{\n  return <h1>Counter: { count }</h1>;\n}"}],["styles.css",{"c":"h1 {\n  font-family: Tahoma; \n}"}]],"head":null,"i":0,"stage":[],"commits":{}},"v":"7.10.0"}
 
 const getFirstFile = function () {
   const allFiles = git.getAll();
